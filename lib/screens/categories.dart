@@ -43,8 +43,11 @@ class CategoriesScreen extends StatelessWidget {
         children: [
           // availableCategories.map((category) => CategoryGridItem(category: category)).toList()
           for(final category in availableCategories)
+            // availableCategories list me ek ek category select hogi, us sey grid ka element banega
+            // jis grid pe tap hoga uska category object pass hoga CategoryGridItem ko, onSelectCategory() function ko
             CategoryGridItem(
-              category: category, onSelectCategory: () {
+              category: category,
+              onSelectCategory: () {
                 _selectCategory(context, category);
               },
             ),
