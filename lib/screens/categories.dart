@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app_section_8/data/dummy_data.dart';
 import 'package:meals_app_section_8/models/category.dart';
+import 'package:meals_app_section_8/models/meal.dart';
 import 'package:meals_app_section_8/screens/meals.dart';
 import 'package:meals_app_section_8/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+  const CategoriesScreen({Key? key, required this.onToggleFavorite}) : super(key: key);
+
+  final void Function(Meal meal) onToggleFavorite;
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
@@ -21,6 +24,7 @@ class CategoriesScreen extends StatelessWidget {
         builder: (ctx) => MealsScreen(
           title: category.title,
           meals: filteredMeals,
+          onToggleFavorite: onToggleFavorite,
         ),
       )
     );
@@ -28,11 +32,7 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Pick your Category"),
-      ),
-      body: GridView(
+    return GridView(
         padding: const EdgeInsets.all(24),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount( // Cross Axis Left to right
           crossAxisCount: 2, // No of columns in grid, Horizontally two columns
@@ -45,14 +45,13 @@ class CategoriesScreen extends StatelessWidget {
           for(final category in availableCategories)
             // availableCategories list me ek ek category select hogi, us sey grid ka element banega
             // jis grid pe tap hoga uska category object pass hoga CategoryGridItem ko, onSelectCategory() function ko
-            CategoryGridItem(
+            CategoryGridItem( /// Displays a grid item
               category: category,
               onSelectCategory: () {
                 _selectCategory(context, category);
               },
             ),
         ],
-      )
     );
   }
 }
