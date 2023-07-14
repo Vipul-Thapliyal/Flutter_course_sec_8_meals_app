@@ -6,12 +6,19 @@ import 'package:meals_app_section_8/screens/meals.dart';
 import 'package:meals_app_section_8/widgets/category_grid_item.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({Key? key, required this.onToggleFavorite}) : super(key: key);
+  const CategoriesScreen(
+    {
+      Key? key,
+      required this.onToggleFavorite,
+      required this.availableMeals,
+    }
+  ) : super(key: key);
 
   final void Function(Meal meal) onToggleFavorite;
+  final List<Meal> availableMeals;
 
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+    final filteredMeals = availableMeals.where((meal) => meal.categories.contains(category.id)).toList();
     // dummyMeals ek list hai Meals ki, is list ki har ek meal check hogi
     // Meal mey ek list hai categories
     // Agar meal ki categories list mey pass ho rahi category ki id hui
